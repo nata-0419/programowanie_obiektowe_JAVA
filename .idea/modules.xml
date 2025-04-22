@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/3_Dziedziczenie_i_polimorfizm/3_Dziedziczenie_i_polimorfizm.iml" filepath="$PROJECT_DIR$/3_Dziedziczenie_i_polimorfizm/3_Dziedziczenie_i_polimorfizm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/5_Obsluga_wyjątków/5_Obsluga_wyjątków.iml" filepath="$PROJECT_DIR$/5_Obsluga_wyjątków/5_Obsluga_wyjątków.iml" />
+      <module fileurl="file://$PROJECT_DIR$/6_Strumienie_serializacja_pracaZPilkami/6_Strumienie_serializacja_pracaZPilkami.iml" filepath="$PROJECT_DIR$/6_Strumienie_serializacja_pracaZPilkami/6_Strumienie_serializacja_pracaZPilkami.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Programowanie_obiektowe_JAVA.iml" filepath="$PROJECT_DIR$/.idea/Programowanie_obiektowe_JAVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/cw2/cw2.iml" filepath="$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/cw2/cw2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/cw3/cw3.iml" filepath="$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/cw3/cw3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka1/nauka1.iml" filepath="$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka1/nauka1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka2/nauka2.iml" filepath="$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka2/nauka2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka3/nauka3.iml" filepath="$PROJECT_DIR$/1_Wprowadzenie_do_jezyka_java/nauka3/nauka3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jak_nauczyć_sie/prosty_kalkulator/prosty_kalkulator.iml" filepath="$PROJECT_DIR$/Jak_nauczyć_sie/prosty_kalkulator/prosty_kalkulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Jak_nauczyć_sie/pytanie_uzytkownika/pytanie_uzytkownika.iml" filepath="$PROJECT_DIR$/Jak_nauczyć_sie/pytanie_uzytkownika/pytanie_uzytkownika.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2_Klasy_i_obiekty/zad.1/zad.1.iml" filepath="$PROJECT_DIR$/2_Klasy_i_obiekty/zad.1/zad.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2_Klasy_i_obiekty/zad.2/zad.2.iml" filepath="$PROJECT_DIR$/2_Klasy_i_obiekty/zad.2/zad.2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/2_Klasy_i_obiekty/zad.3/zad.3.iml" filepath="$PROJECT_DIR$/2_Klasy_i_obiekty/zad.3/zad.3.iml" />
+    </modules>
+  </component>
+</project>
