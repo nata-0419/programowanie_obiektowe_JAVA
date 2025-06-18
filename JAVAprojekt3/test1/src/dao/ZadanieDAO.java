@@ -1,19 +1,22 @@
 package dao;
 
+import baza.PolaczenieBazaDanych;
+import model.NiepoprawnyPiorytetException;
 import model.Zadanie;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZadanieDAO {
-    private Connection polaczenie;
-
+public class ZadanieDAO extends AbstractDAO implements ZadanieDAOInterface {
     public ZadanieDAO(Connection polaczenie) {
-        this.polaczenie = polaczenie;
+        super(polaczenie);
     }
 
-    public void utworzZadanie(Zadanie zadanie) throws SQLException {
+    public void utworzZadanie(Zadanie zadanie) throws SQLException, NiepoprawnyPiorytetException {
+        if (zadanie.getPriorytet() <= 0) {
+            throw new NiepoprawnyPiorytetException();
+        }
         String sql = "INSERT INTO zadania (id_uzytkownika, nazwa, piorytet, kategoria) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = polaczenie.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, zadanie.getIdUzytkownika());
@@ -50,21 +53,24 @@ public class ZadanieDAO {
     public List<Zadanie> pobierzZadaniaUzytkownika(int idUzytkownika) throws SQLException {
         String sql = "SELECT * FROM zadania WHERE id_uzytkownika = ?";
         List<Zadanie> lista = new ArrayList<>();
-        try (PreparedStatement stmt = polaczenie.prepareStatement(sql)) {
+        try (Connection conn = PolaczenieBazaDanych.getPolaczenie();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUzytkownika);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                lista.add(new Zadanie(
-                        rs.getInt("id"),
-                        rs.getInt("id_uzytkownika"),
-                        rs.getString("nazwa"),
-                        rs.getInt("piorytet"),
-                        rs.getString("kategoria")
-                ));
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(new Zadanie(
+                            rs.getInt("id"),
+                            rs.getInt("id_uzytkownika"),
+                            rs.getString("nazwa"),
+                            rs.getInt("piorytet"),
+                            rs.getString("kategoria")
+                    ));
+                }
             }
         }
         return lista;
     }
+
 
     public void aktualizujZadanie(Zadanie zadanie) throws SQLException {
         String sql = "UPDATE zadania SET nazwa = ?, piorytet = ?, kategoria = ? WHERE id = ?";

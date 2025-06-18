@@ -2,6 +2,7 @@ package gui;
 
 import baza.PolaczenieBazaDanych;
 import dao.ZadanieDAO;
+import model.NiepoprawnyPiorytetException;
 import model.Zadanie;
 
 import javax.swing.*;
@@ -101,6 +102,8 @@ public class FormularzZadania extends JDialog {
             }
             zatwierdzono = true;
             dispose();
+        } catch (NiepoprawnyPiorytetException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Błąd walidacji", JOptionPane.WARNING_MESSAGE);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Błąd bazy danych: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
         }
@@ -110,3 +113,4 @@ public class FormularzZadania extends JDialog {
         return zatwierdzono;
     }
 }
+

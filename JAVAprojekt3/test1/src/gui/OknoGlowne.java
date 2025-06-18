@@ -6,6 +6,7 @@ import dao.SzczegolyCeluDAO;
 import dao.SzczegolyZadaniaDAO;
 import dao.ZadanieDAO;
 import model.Cel;
+import model.SzczegolyZadania;
 import model.Uzytkownik;
 import model.Zadanie;
 
@@ -15,10 +16,16 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
+import javax.swing.JOptionPane;
+
+
+
 
 public class OknoGlowne extends JFrame {
     private Uzytkownik zalogowanyUzytkownik;
-
+    private Connection polaczenie;
     private ZadanieDAO zadanieDAO;
     private SzczegolyZadaniaDAO szczegolyZadaniaDAO;
     private CelDAO celDAO;
@@ -38,9 +45,8 @@ public class OknoGlowne extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        Connection polaczenie = null;
         try {
-            polaczenie = PolaczenieBazaDanych.getPolaczenie();
+            polaczenie = PolaczenieBazaDanych.getPolaczenie();  // <-- przypisanie do pola klasy
             zadanieDAO = new ZadanieDAO(polaczenie);
             szczegolyZadaniaDAO = new SzczegolyZadaniaDAO(polaczenie);
             celDAO = new CelDAO(polaczenie);
@@ -60,6 +66,7 @@ public class OknoGlowne extends JFrame {
         odswiezListeZadan();
         odswiezListeCelow();
     }
+
 
     private JPanel stworzPanelZadan() {
         JPanel panel = new JPanel(new BorderLayout());
@@ -88,6 +95,26 @@ public class OknoGlowne extends JFrame {
         btnEdytuj.addActionListener(e -> edytujZadanie());
         btnUsun.addActionListener(e -> usunZadanie());
 
+        tabelaZadan.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tabelaZadan.rowAtPoint(e.getPoint());
+                int col = tabelaZadan.columnAtPoint(e.getPoint());
+
+                if (row >= 0 && col == 1 && e.getClickCount() == 2) { // podwójne kliknięcie
+                    try {
+                        int idZadania = (int) tabelaZadan.getValueAt(row, 0);
+                        Zadanie zadanie = zadanieDAO.pobierzZadaniePoId(idZadania);
+                        SzczegolyZadaniaDAO szczegolyDAO = new SzczegolyZadaniaDAO(polaczenie);
+                        SzczegolyZadania szczegoly = szczegolyDAO.pobierzSzczegolyZadaniaPoIdZadania(idZadania);
+                        SzczegolyZadaniaDialog dialog = new SzczegolyZadaniaDialog(OknoGlowne.this, zadanie, szczegoly);
+                        dialog.setVisible(true);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(OknoGlowne.this, "Błąd podczas ładowania szczegółów: " + ex.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
         return panel;
     }
 
@@ -129,10 +156,10 @@ public class OknoGlowne extends JFrame {
                 modelZadan.addRow(new Object[]{z.getId(), z.getNazwa(), z.getPriorytet(), z.getKategoria()});
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Błąd podczas ładowania zadań: " + e.getMessage(), "Błąd", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     private void odswiezListeCelow() {
         try {
@@ -145,8 +172,6 @@ public class OknoGlowne extends JFrame {
             pokazBlad("Błąd podczas ładowania celów: " + e.getMessage());
         }
     }
-
-    // --- Metody obsługi zadań ---
 
     private void dodajZadanie() {
         FormularzZadania formularz = new FormularzZadania(this, null, zalogowanyUzytkownik.getId());
@@ -193,8 +218,6 @@ public class OknoGlowne extends JFrame {
             }
         }
     }
-
-    // --- Metody obsługi celów ---
 
     private void dodajCel() {
         FormularzCelu formularz = new FormularzCelu(this, null, zalogowanyUzytkownik.getId());

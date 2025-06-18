@@ -29,7 +29,6 @@ public class UzytkownikDAO {
         }
     }
 
-    // Pobranie hash hasła po nicku
     public String pobierzHaslo(String nick) throws SQLException {
         String sql = "SELECT haslo FROM uzytkownik WHERE nick = ?";
         try (PreparedStatement stmt = polaczenie.prepareStatement(sql)) {
@@ -43,7 +42,6 @@ public class UzytkownikDAO {
         }
     }
 
-    // Pobranie pełnego obiektu użytkownika po nicku
     public Uzytkownik pobierzUzytkownika(String nick) throws SQLException {
         String sql = "SELECT id, imie, nazwisko, nick, haslo FROM uzytkownik WHERE nick = ?";
         try (PreparedStatement stmt = polaczenie.prepareStatement(sql)) {

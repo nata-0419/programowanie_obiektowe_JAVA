@@ -76,7 +76,6 @@ public class OknoLogowania extends JFrame {
                 return;
             }
 
-            // Obsługa prefiksu $2y$ (jeśli występuje)
             if (hash.startsWith("$2y$")) {
                 hash = "$2a$" + hash.substring(4);
             }

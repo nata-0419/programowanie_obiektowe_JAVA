@@ -27,15 +27,16 @@ public class SzczegolyZadaniaDAO {
         String sql = "SELECT * FROM szczegoly_zad WHERE id_zadania = ?";
         try (PreparedStatement stmt = polaczenie.prepareStatement(sql)) {
             stmt.setInt(1, idZadania);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new SzczegolyZadania(
-                        rs.getInt("id_zadania"),
-                        rs.getDate("data").toLocalDate(),
-                        rs.getTime("godzina").toLocalTime(),
-                        rs.getString("stan_realizacji"),
-                        rs.getString("szczegoly")
-                );
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new SzczegolyZadania(
+                            rs.getInt("id_zadania"),
+                            rs.getDate("data").toLocalDate(),
+                            rs.getTime("godzina").toLocalTime(),
+                            rs.getString("stan_realizacji"),
+                            rs.getString("szczegoly")
+                    );
+                }
             }
         }
         return null;

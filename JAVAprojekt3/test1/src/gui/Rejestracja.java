@@ -21,7 +21,4 @@ public class Rejestracja {
             return false;
         }
     }
-
-
-    // Możesz dodać tutaj metody do walidacji danych, np. sprawdzanie poprawności nicku, hasła itp.
 }
